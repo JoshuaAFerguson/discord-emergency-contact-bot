@@ -1,0 +1,35 @@
+{
+  "name": "discord-emergency-contact-bot",
+  "version": "1.0.0",
+  "description": "A discord bot to enable emergency contact through SMS and Phone to server members.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoshuaAFerguson/discord-emergency-contact-bot.git"
+  },
+  "keywords": [
+    "Discord",
+    "Twilio",
+    "Contact",
+    "Bot"
+  ],
+  "author": "Joshua Ferguson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JoshuaAFerguson/discord-emergency-contact-bot/issues"
+  },
+  "homepage": "https://github.com/JoshuaAFerguson/discord-emergency-contact-bot#readme",
+  "dependencies": {
+    "discord.js": "^12.2.0",
+    "dotenv": "^8.2.0",
+    "libphonenumber-js": "^1.7.55",
+    "mongoose": "^5.9.25",
+    "twilio": "^3.48.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
