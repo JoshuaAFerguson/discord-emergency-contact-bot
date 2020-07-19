@@ -22,13 +22,15 @@ module.exports = {
 
                         const memberList = msg.guild.members.cache.find(member => member.id === user.userID);
 
+
+
                         const result = await msg.LocalNumber.findOne({countryCode: user.countryCode});
 
                         if (result)
                         {
-                            message += `${memberList.nickname ? memberList.nickname : memberList.username} | ${user.countryCode} | ${result.number} | ${user.phoneNumber} |\n`;
+                            message += `${memberList.nickname ? memberList.nickname : memberList.user.username} | ${user.countryCode} | ${result.number} | ${user.phoneNumber} |\n`;
                         } else {
-                            message += `${memberList.nickname ? memberList.nickname : memberList.username} | ${user.countryCode} | None | ${user.phoneNumber} |\n`;
+                            message += `${memberList.nickname ? memberList.nickname : memberList.user.username} | ${user.countryCode} | None | ${user.phoneNumber} |\n`;
                         }
 
 
