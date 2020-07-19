@@ -9,6 +9,8 @@ Object.keys(botCommands).map(key => {
     bot.commands.set(botCommands[key].name, botCommands[key]);
   });
 
+const server = require('./server.js')
+
 const mongoose = require('mongoose');
 
 mongoose.connect(process.env.DBURL, {useNewUrlParser: true, useUnifiedTopology: true});
