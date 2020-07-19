@@ -1,12 +1,3 @@
-//const Discord = require('discord.js');
-
-
-const message = { 
-    value: '',
-    set addLine (line) {this.value += line}
-
-}
-
 async function asyncForEach(array, callback) {
     for (let index = 0; index < array.length; index++) {
       await callback(array[index], index, array);
@@ -22,7 +13,7 @@ module.exports = {
 
         if (member._roles.find(id => id === roles.id))
         {
-            message.addLine = '```| Username | Code | Local Number | Phone Number |\n';
+            let message = '```| Username | Code | Local Number | Phone Number |\n';
 
             let contacts = await msg.Contact.find();
 
@@ -35,9 +26,9 @@ module.exports = {
 
                         if (result)
                         {
-                            message.addLine = `${memberList.nickname ? memberList.nickname : memberList.username} | ${user.countryCode} | ${result.number} | ${user.phoneNumber} |\n`;
+                            message += `${memberList.nickname ? memberList.nickname : memberList.username} | ${user.countryCode} | ${result.number} | ${user.phoneNumber} |\n`;
                         } else {
-                            message.addLine = `${memberList.nickname ? memberList.nickname : memberList.username} | ${user.countryCode} | None | ${user.phoneNumber} |\n`;
+                            message += `${memberList.nickname ? memberList.nickname : memberList.username} | ${user.countryCode} | None | ${user.phoneNumber} |\n`;
                         }
 
 
@@ -46,8 +37,8 @@ module.exports = {
                     });
 
                     //formatTable(message.value);
-                    message.addLine = '```';
-                    msg.channel.send(message.value)
+                    message += '```';
+                    msg.channel.send(message)
 
         } else {
             msg.reply('You do not have the correct permissions to execute that command.');
