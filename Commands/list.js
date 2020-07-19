@@ -31,14 +31,13 @@ module.exports = {
 
                         const memberList = msg.guild.members.cache.find(member => member.id === user.userID);
 
-                        result = await msg.LocalNumber.findOne({countryCode: user.countryCode});
-
+                        const result = await msg.LocalNumber.findOne({countryCode: user.countryCode});
 
                         if (result)
                         {
-                            message.addLine = `${memberList.nickname} | ${user.countryCode} | ${result.number} | ${user.phoneNumber} |\n`;
+                            message.addLine = `${memberList.nickname ? memberList.nickname : memberList.username} | ${user.countryCode} | ${result.number} | ${user.phoneNumber} |\n`;
                         } else {
-                            message.addLine = `${memberList.nickname} | ${user.countryCode} | None | ${user.phoneNumber} |\n`;
+                            message.addLine = `${memberList.nickname ? memberList.nickname : memberList.username} | ${user.countryCode} | None | ${user.phoneNumber} |\n`;
                         }
 
 
