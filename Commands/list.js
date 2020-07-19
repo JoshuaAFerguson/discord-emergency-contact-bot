@@ -46,7 +46,7 @@ module.exports = {
                         
                     });
 
-                    formatTable(message.value);
+                    //formatTable(message.value);
                     message.addLine = '```';
                     msg.channel.send(message.value)
 
