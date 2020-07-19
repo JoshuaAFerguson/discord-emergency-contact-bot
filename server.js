@@ -1,7 +1,7 @@
 const http = require('http');
 const VoiceResponse = require('twilio').twiml.VoiceResponse;
 
-http.createServer(function (req, res) => {
+http.createServer(function (req, res) {
     // Create TwiML response
     const twiml = new VoiceResponse();
 
