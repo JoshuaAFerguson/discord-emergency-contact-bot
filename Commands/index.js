@@ -1,6 +1,8 @@
 module.exports = {
     ping: require('./ping'),
-    add: require('./addNumber'),
-    local: require('./addLocal'),
+    add: require('./add'),
+    local: require('./local'),
     call: require('./call'),
+    text: require('./text'),
+    list: require('./list'),
   };

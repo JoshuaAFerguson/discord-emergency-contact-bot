@@ -1,6 +1,6 @@
 module.exports = {
-    name: 'call',
-    description: 'Call user!',
+    name: 'text',
+    description: 'Text a user!',
     execute(msg, args) {
         const member = msg.guild.members.cache.find(user => user.id === msg.author.id)
         const roles = msg.guild.roles.cache.find(role => role.name === 'Phat ASHs');
@@ -10,7 +10,6 @@ module.exports = {
             if (msg.mentions.users.size) {
                 const taggedUser = msg.mentions.users.first();
 
-                //console.info(taggedUser);
 
                 msg.Contact.find({userID: taggedUser.id})
                     .then(contact => {
@@ -24,19 +23,20 @@ module.exports = {
                                         {
                                             msg.reply('Country does not have an available outgoing number!');
                                         } else {
-                                            msg.channel.send(`Attempting to call: ${taggedUser}`);
-                                            console.info(`Setting up call to ${contact[0].phoneNumber} using ${local[0].number}`);
-                                            msg.TwilioClient.calls.create({
-                                                    url: `${msg.ResponseURL}`,
-                                                    to: `${contact[0].phoneNumber}`,
-                                                    from: `${local[0].number}`
-                                                }).then(call => {
-                                                    console.info("Call Dispatched");
-                                                    console.log(call)
+                                            msg.channel.send(`Attempting to text: ${taggedUser}`);
+                                            console.info(`Setting up text to ${contact[0].phoneNumber} using ${local[0].number}`);
+
+                                            msg.TwilioClient.messages.create({
+                                                    body: 'This is Lewd. You are currently under attack in KoH!',
+                                                    from: `${local[0].number}`,
+                                                    to: `${contact[0].phoneNumber}`
                                                 })
-                                                .catch(error => console.log(error));
+                                                .then(message => {
+                                                    console.log('Text Sent');
+                                                    console.log(message.sid);
+                                                })
+                                                .catch(error => console.log(error));;
                                         }
-                                        //console.info(msg.TwilioClient.calls);
 
                                     }).catch(error => console.log(error));
                         }

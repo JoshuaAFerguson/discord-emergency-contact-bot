@@ -5,6 +5,7 @@ module.exports = {
     description: 'Add a local number to call from.',
     execute(msg, args) {
         if (msg.author.id === msg.AdminID) {
+            console.info('Executing Administration Command');
             if (args.length == 0){
                 msg.LocalNumber.find()
                             .then(number => {
@@ -26,7 +27,7 @@ module.exports = {
                             .then(number => {
                                 if(number.length == 0) {
                                     const newLocalNumber = new msg.LocalNumber({
-                                        localNumber: phoneNumber.number,
+                                        number: phoneNumber.number,
                                         countryCode: phoneNumber.country,
                                     });
                     
