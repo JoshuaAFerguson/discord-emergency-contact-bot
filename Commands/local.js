@@ -12,8 +12,7 @@ module.exports = {
                                 msg.channel.send(' | Location Code | Phone Number |');
                                 number.forEach(localNumber => {
                                     msg.channel.send(` | ${localNumber.countryCode} | ${localNumber.number} |`);
-                                });
-                                //msg.channel.send(message);                     
+                                });                  
                             })
                             .catch(error => console.log(error));
             } else if (args.length == 3) {
