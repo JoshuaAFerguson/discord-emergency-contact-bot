@@ -5,4 +5,5 @@ module.exports = {
     call: require('./call'),
     text: require('./text'),
     list: require('./list'),
+    help: require('./help'),
   };
