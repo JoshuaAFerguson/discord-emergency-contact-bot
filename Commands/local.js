@@ -42,8 +42,6 @@ module.exports = {
                                     msg.reply('Local number already exists.');
     
                                 }
-    
-                        
                             })
                             .catch(error => console.log(error));  
                 }
