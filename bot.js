@@ -3,7 +3,6 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 const fetch = require('node-fetch');
 
-
 const express = require('express');
 
 const callback = express();
@@ -46,6 +45,7 @@ Object.keys(botCommands).map(key => {
 
 const cooldowns = new Discord.Collection();
 
+const timers = new Discord.Collection();
 
 const TOKEN = process.env.TOKEN;
 
@@ -106,7 +106,7 @@ bot.on('message', msg => {
 
         console.log('Time has passed');
         timestamps.set(msg.author.id, now);
-        //setTimeout(() => timestamps.delete(msg.author.id), cooldownAmount);
+        setTimeout(() => timestamps.delete(msg.author.id), cooldownAmount);
 
         try {
             command.execute(msg, args);
