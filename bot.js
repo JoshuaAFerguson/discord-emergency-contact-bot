@@ -42,12 +42,16 @@ const botCommands = require('./Commands');
 
 Object.keys(botCommands).map(key => {
     bot.commands.set(botCommands[key].name, botCommands[key]);
-  });
+});
+
+const cooldowns = new Discord.Collection();
 
 
 const TOKEN = process.env.TOKEN;
 
 bot.login(TOKEN);
+
+
 
 bot.once('ready', () => {
     console.info(`Logged in as ${bot.user.tag}!`);
@@ -60,21 +64,55 @@ bot.on('message', msg => {
     const commandPrefix = args.shift().toLowerCase();
 
     if (commandPrefix === prefix){
-        const command = args.shift().toLowerCase();
+        const commandName = args.shift().toLowerCase();
 
-        console.info(`Called command: ${command}`);
 
-        if (!bot.commands.has(command)) {
 
-            msg.reply(`No command named: ${command}`);
+        console.info(`Called command: ${commandName}`);
+
+        if (!bot.commands.has(commandName)) {
+
+            msg.reply(`No command named: ${commandName}`);
             return;
         }
 
+        const command = bot.commands.get(commandName);
+
+        console.log(command)
+
+        if (!cooldowns.has(command.name)) {
+          cooldowns.set(command.name, new Discord.Collection());
+        }
+        
+        const now = Date.now();
+        const timestamps = cooldowns.get(command.name);
+        const cooldownAmount = (command.cooldown || 3) * 1000;
+        console.log(command.cooldown);
+        
+        if (timestamps.has(msg.author.id)) {
+          console.log('Timestamps has user.')
+          const expirationTime = timestamps.get(msg.author.id) + cooldownAmount;
+
+          console.log(cooldownAmount);
+          console.log(now);
+          console.log(expirationTime);
+
+          if (now < expirationTime) {
+            console.log('time hasnt passed');
+            const timeLeft = (expirationTime - now) / 1000;
+            return msg.reply(`Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+          }
+        }
+
+        console.log('Time has passed');
+        timestamps.set(msg.author.id, now);
+        //setTimeout(() => timestamps.delete(msg.author.id), cooldownAmount);
+
         try {
-            bot.commands.get(command).execute(msg, args);
+            command.execute(msg, args);
           } catch (error) {
             console.error(error);
-            msg.reply('there was an error trying to execute that command!');
+            msg.reply('There was an error trying to execute that command!');
           }
     }
     

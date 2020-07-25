@@ -89,64 +89,6 @@ module.exports = {
                         msg.reply('There was an error adding your number.')
                     }
                 }
-
-
-                // msg.Contact.find({userID: msg.author.id})
-                //     .then(contact => {
-                //         if (contact.length > 0) {
-                //             console.info('User found!');
-                //             if (contact[0].phoneNumber == phoneNumber.number)
-                //             {
-                //                 msg.reply('Contact information already exists.');
-                //                 return;
-                //             } else {
-                //                 contact[0].phoneNumber = phoneNumber.number;
-                //                 contact[0].localNumber = phoneNumber.nationalNumber;
-                //                 contact[0].countryCode = phoneNumber.country;
-    
-    
-                //                 //location = phoneNumber.country;
-        
-                //                 contact[0].save()
-                //                     .then(result => {
-                //                         msg.reply(`Sucessfully updated contact number:${phoneNumber.number} in the database.`);
-                                        
-                //                     })
-                //                     .catch(err => {
-                //                         msg.reply('There was an error adding your number to the Database.');
-                //                         console.log(err)});
-    
-                //             }
-                //         } else {
-                //             console.info('User Not found!');
-                //             const newContact = new msg.Contact({
-                //                 userID: msg.author.id,
-                //                 phoneNumber: phoneNumber.number,
-                //                 localNumber: phoneNumber.nationalNumber,
-                //                 countryCode: phoneNumber.country,
-                //             });
-    
-                //             newContact.save()
-                //                 .then(result => {
-                //                     msg.reply(`Sucessfully added ${phoneNumber.number} to the database.`);
-                                    
-                //                 })
-                //                 .catch(err => {
-                //                     msg.reply('There was an error adding your number to the Database.');
-                //                     console.log(err)});
-                //         }
-                //     }).catch(error => {
-                //         msg.reply('There was an unkown database error.')
-                //         console.log(error)});
-            
-    
-                // //check if user already has a number.
-                // //add number to DB 
-                // //respond that a number already exists and is being updated to the new number
-    
-                // //check is local number exists
-                // //provision local number if necessary
-                // //Respond with local number to be added to contacts 
             }
         } else {
             msg.reply('You do not have the correct permissions to execute that command.');
