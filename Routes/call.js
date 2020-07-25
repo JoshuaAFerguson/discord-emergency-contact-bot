@@ -28,6 +28,35 @@ router.get('/:id', (req, res) => {
     }) 
 });
 
+router.post('/timer', async (req, res) => {
+    const call = await client.calls.create({
+        url: process.env.TIMERURL,
+        to: req.body.to,
+        from: req.body.from,
+        statusCallback: process.env.CALLBACKURL,
+        statusCallbackMethod: 'POST',
+        statusCallbackEvent: ['ringing', 'initiated', 'answered', 'completed'],
+    });
+
+    const eventLog = new Log({
+        userID: req.body.userID,
+        eventType: 'CALL',
+        eventTargetID: req.body.eventTargetID,
+        status: 'initiated',
+        sid: call.sid,
+        timeRequested: Date.now(),
+        channelID: req.body.channelID
+    });
+
+    result = await eventLog.save()
+        .then(result => {
+            res.send({success: true, result});
+        })
+        .catch(error => {
+            res.send({success: false, error});
+        });
+});
+
 router.post('/', async (req, res) => {
     const call = await client.calls.create({
         url: process.env.RESPONSEURL,

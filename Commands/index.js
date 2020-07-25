@@ -7,4 +7,5 @@ module.exports = {
     // list: require('./list'),
     help: require('./help'),
     reload: require('./reload'),
+    timer: require('./timer'),
   };

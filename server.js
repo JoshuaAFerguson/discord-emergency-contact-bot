@@ -21,6 +21,15 @@ server.post('/attack', async (req, res) => {
     res.send(twiml.toString());
 });
 
+server.post('/timer', async (req, res) => {
+  const twiml = new VoiceResponse();
+
+  twiml.say('Hello, this is Lewd. Your shield timer has expired.');
+
+  res.type('xml');
+  res.send(twiml.toString());
+});
+
 server.post('/calls/events', (req, res) => {
   const status = req.body.CallStatus;
   const sid = req.body.CallSid;

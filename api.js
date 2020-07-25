@@ -19,10 +19,12 @@ api.use(express.json());
 const contact = require('./Routes/contact');
 const call = require('./Routes/call');
 const text = require('./Routes/text');
+const timers = require('./Routes/timers');
 
 api.use('/contact', contact);
 api.use('/call', call);
 api.use('/text', text);
+api.use('/timer', timers);
 
 api.listen(3000, () => console.log(`API now listening on port 3000`));
 

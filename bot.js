@@ -9,6 +9,12 @@ const callback = express();
 
 callback.use(express.json());
 
+async function asyncForEach(array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array);
+  }
+}
+
 callback.listen(3001, () => console.log(`Bot now listening on port 3001`));
 
 callback.post('/', async (req, res) => {
@@ -45,16 +51,57 @@ Object.keys(botCommands).map(key => {
 
 const cooldowns = new Discord.Collection();
 
-const timers = new Discord.Collection();
-
 const TOKEN = process.env.TOKEN;
 
 bot.login(TOKEN);
 
 
-
-bot.once('ready', () => {
+bot.once('ready', async () => {
     console.info(`Logged in as ${bot.user.tag}!`);
+
+    const timers = await fetch('http://localhost:3000/timer');
+    const timersData = await timers.json();
+
+    //console.log(timersData.result[0]);
+    if(timersData.success) {
+      //console.log('success')
+
+      console.log(timersData.result.length)
+
+      asyncForEach(timersData.result, async (timer) => {
+        console.log(timer)
+        const user = await fetch(`http://localhost:3000/contact/${timer.userID}`);
+        const resultData = await user.json();
+
+        console.log(resultData);
+
+        if (resultData.success){
+
+
+        const timeout = timer.timeout - Date.now();
+
+        console.log(timeout);
+
+        setTimeout(async () => {
+          const call = await fetch(`http://localhost:3000/call/timer`, {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                to: resultData.result.phoneNumber,
+                from: process.env.OUTGOING_NUMBER,
+                userID: timer.userID,
+                eventTargetID: timer.userID,
+                channelID: timer.channelID
+            }),
+            });
+
+          }, timeout);
+      };
+    });
+  }
+    
 });
 
 bot.on('message', msg => {
@@ -78,7 +125,6 @@ bot.on('message', msg => {
 
         const command = bot.commands.get(commandName);
 
-        console.log(command)
 
         if (!cooldowns.has(command.name)) {
           cooldowns.set(command.name, new Discord.Collection());
@@ -87,24 +133,16 @@ bot.on('message', msg => {
         const now = Date.now();
         const timestamps = cooldowns.get(command.name);
         const cooldownAmount = (command.cooldown || 3) * 1000;
-        console.log(command.cooldown);
         
         if (timestamps.has(msg.author.id)) {
-          console.log('Timestamps has user.')
           const expirationTime = timestamps.get(msg.author.id) + cooldownAmount;
 
-          console.log(cooldownAmount);
-          console.log(now);
-          console.log(expirationTime);
-
           if (now < expirationTime) {
-            console.log('time hasnt passed');
             const timeLeft = (expirationTime - now) / 1000;
             return msg.reply(`Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
           }
         }
 
-        console.log('Time has passed');
         timestamps.set(msg.author.id, now);
         setTimeout(() => timestamps.delete(msg.author.id), cooldownAmount);
 
