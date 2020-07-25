@@ -35,6 +35,7 @@ module.exports = {
         const resultData = await result.json();
         //console.log(resultData);
         
+        msg.reply(`Added timer for ${args[0]} from now.`)
 
         setTimeout(async (id = msg.author.id, channel = msg.channel.id) => {
 
