@@ -23,10 +23,13 @@
   },
   "homepage": "https://github.com/JoshuaAFerguson/discord-emergency-contact-bot#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
+    "express": "^4.17.1",
     "libphonenumber-js": "^1.7.55",
     "mongoose": "^5.9.25",
+    "node-fetch": "^2.6.0",
     "text-table": "^0.2.0",
     "twilio": "^3.48.0"
   },
